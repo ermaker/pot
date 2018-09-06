@@ -41,6 +41,7 @@ services:
       - RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR=0.9
     ports:
       - '5160:5160/udp'
+      - '5170:5170'
     restart: always
     deploy:
       resources:
