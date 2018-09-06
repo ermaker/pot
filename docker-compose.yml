@@ -53,7 +53,7 @@ services:
       - buffer:/fluentd/log
   logspout:
     image: gliderlabs/logspout
-    command: raw://s.o.ermaker.tk:5160
+    command: raw://localhost:5160
     environment:
       - 'RAW_FORMAT={"@timestamp":{{ toJSON .Time }},"message":{{ toJSON .Data }},"tag":{{ toJSON ( index .Container.Config.Labels "parse.flow" ) }},"docker":{"hostname":{{ toJSON .Container.Config.Hostname }},"project":{{ toJSON ( index .Container.Config.Labels "com.docker.compose.project" ) }},"service":{{ toJSON ( or ( index .Container.Config.Labels "com.docker.compose.service" ) .Container.Name ) }},"number":{{ toJSON ( index .Container.Config.Labels "com.docker.compose.container-number" ) }},"id":{{ toJSON .Container.ID }}}}'
       - PORT=4226
