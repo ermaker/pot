@@ -22,8 +22,8 @@ services:
     command: -e --system.hostfs=/hostfs --strict.perms=false
     user: root
     environment:
-      - ES_HOSTS=${ES_HOSTS-localhost:9200}
-      - KIBANA_HOST=${KIBANA_HOST-localhost:5601}
+      - ES_HOSTS=${ES_HOSTS-http://localhost:9200}
+      - KIBANA_HOST=${KIBANA_HOST-http://localhost:5601}
     volumes:
       - /proc:/hostfs/proc:ro
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
