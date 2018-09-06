@@ -11,6 +11,7 @@ services:
     volumes:
       - elasticsearch:/usr/share/elasticsearch/data
     ulimits:
+      nofile: 65536
       memlock: -1
     ports:
       - '9200:9200'
@@ -39,6 +40,8 @@ services:
     environment:
       - LOGSPOUT=ignore
       - RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR=0.9
+    ulimits:
+      nofile: 65536
     ports:
       - '5160:5160/udp'
       - '5170:5170'
