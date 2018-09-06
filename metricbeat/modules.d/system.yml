@@ -1,0 +1,55 @@
+# Module: system
+# Docs: https://www.elastic.co/guide/en/beats/metricbeat/6.4/metricbeat-module-system.html
+
+- module: system
+  period: 10s
+  metricsets:
+    - cpu
+    - load
+    - memory
+    - network
+    - process
+    - process_summary
+    #- core
+    #- diskio
+    #- socket
+  process.include_top_n:
+    by_cpu: 5      # include top 5 processes by CPU
+    by_memory: 5   # include top 5 processes by memory
+  processors:
+  - drop_fields:
+      when.equals:
+        system.process.cgroup.memory.kmem.limit.bytes: 18446744073709551615
+      fields: ["system.process.cgroup.memory.kmem.limit.bytes"]
+  - drop_fields:
+      when.equals:
+        system.process.cgroup.memory.kmem_tcp.limit.bytes: 18446744073709551615
+      fields: ["system.process.cgroup.memory.kmem_tcp.limit.bytes"]
+  - drop_fields:
+      when.equals:
+        system.process.cgroup.memory.mem.limit.bytes: 18446744073709551615
+      fields: ["system.process.cgroup.memory.mem.limit.bytes"]
+  - drop_fields:
+      when.equals:
+        system.process.cgroup.memory.stats.hierarchical_memory_limit.bytes: 18446744073709551615
+      fields: ["system.process.cgroup.memory.stats.hierarchical_memory_limit.bytes"]
+
+- module: system
+  period: 1m
+  metricsets:
+    - filesystem
+    - fsstat
+  processors:
+  - drop_event.when.regexp:
+      system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
+
+- module: system
+  period: 15m
+  metricsets:
+    - uptime
+
+#- module: system
+#  period: 5m
+#  metricsets:
+#    - raid
+#  raid.mount_point: '/'
