@@ -7,5 +7,5 @@ processors:
 
 output.elasticsearch.hosts: '${ES_HOSTS}'
 
-setup.dashboards.enabled: true
+setup.dashboards.enabled: '${BEAT_DASHBOARDS:false}'
 setup.kibana.host: '${KIBANA_HOST}'
