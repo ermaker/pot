@@ -4,7 +4,7 @@ services:
     image: gliderlabs/logspout
     command: ${FLUENTD_HOST-raw://localhost:5160}
     environment:
-      - 'RAW_FORMAT={"@timestamp":{{ toJSON .Time }},"message":{{ toJSON .Data }},"tag":{{ toJSON ( index .Container.Config.Labels "parse.flow" ) }},"docker":{"hostname":{{ toJSON .Container.Config.Hostname }},"project":{{ toJSON ( index .Container.Config.Labels "com.docker.compose.project" ) }},"service":{{ toJSON ( or ( index .Container.Config.Labels "com.docker.compose.service" ) .Container.Name ) }},"number":{{ toJSON ( index .Container.Config.Labels "com.docker.compose.container-number" ) }},"id":{{ toJSON .Container.ID }}}}'
+      - 'RAW_FORMAT={"@timestamp":{{ toJSON .Time }},"message":{{ toJSON .Data }},"tag":{{ toJSON ( index .Container.Config.Labels "parse.flow" ) }},"docker":{"hostname":{{ toJSON .Container.Config.Hostname }},"name":{{ toJSON .Container.Name }},"project":{{ toJSON ( index .Container.Config.Labels "com.docker.compose.project" ) }},"service":{{ toJSON ( or ( index .Container.Config.Labels "com.docker.compose.service" ) .Container.Name ) }},"number":{{ toJSON ( index .Container.Config.Labels "com.docker.compose.container-number" ) }},"id":{{ toJSON .Container.ID }}}}'
       - PORT=4226
     volumes:
       # - /etc/hostname:/etc/host_hostname:ro
