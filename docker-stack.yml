@@ -27,7 +27,6 @@ services:
       - KIBANA_HOST=${KIBANA_HOST-http://localhost:5601}
       - METRIC_KIBANA=${METRIC_KIBANA-false}
       - METRIC_ES=${METRIC_ES-false}
-
     volumes:
       - /proc:/hostfs/proc:ro
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
