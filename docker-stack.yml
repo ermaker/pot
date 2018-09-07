@@ -2,7 +2,7 @@ version: '3.6'
 services:
   logspout:
     image: gliderlabs/logspout
-    command: ${FLUENTD_HOST:-raw://localhost:5160}
+    command: ${FLUENTD_HOST-raw://localhost:5160}
     environment:
       - 'RAW_FORMAT={"@timestamp":{{ toJSON .Time }},"message":{{ toJSON .Data }},"tag":{{ toJSON ( index .Container.Config.Labels "parse.flow" ) }},"docker":{"hostname":{{ toJSON .Container.Config.Hostname }},"project":{{ toJSON ( index .Container.Config.Labels "com.docker.compose.project" ) }},"service":{{ toJSON ( or ( index .Container.Config.Labels "com.docker.compose.service" ) .Container.Name ) }},"number":{{ toJSON ( index .Container.Config.Labels "com.docker.compose.container-number" ) }},"id":{{ toJSON .Container.ID }}}}'
       - PORT=4226
@@ -22,9 +22,12 @@ services:
     command: -e --system.hostfs=/hostfs --strict.perms=false
     user: root
     environment:
-      - ES_HOSTS
-      - KIBANA_HOST
-      - BEAT_DASHBOARDS
+      - ES_HOSTS=${ES_HOSTS-http://localhost:9200}
+      - BEAT_DASHBOARDS=${BEAT_DASHBOARDS-false}
+      - KIBANA_HOST=${KIBANA_HOST-http://localhost:5601}
+      - METRIC_KIBANA=${METRIC_KIBANA-false}
+      - METRIC_ES=${METRIC_ES-false}
+
     volumes:
       - /proc:/hostfs/proc:ro
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro

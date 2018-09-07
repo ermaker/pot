@@ -2,10 +2,11 @@
 # Docs: https://www.elastic.co/guide/en/beats/metricbeat/6.4/metricbeat-module-elasticsearch.html
 
 - module: elasticsearch
-  #metricsets:
-  #  - node
-  #  - node_stats
+  metricsets:
+    - node
+    - node_stats
   period: 10s
-  hosts: ["localhost:9200"]
+  hosts: '${ES_HOSTS}'
+  enabled: '${METRIC_ES}'
   #username: "user"
   #password: "secret"

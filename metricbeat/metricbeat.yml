@@ -5,7 +5,7 @@ metricbeat.config.modules:
 processors:
 - add_cloud_metadata:
 
-output.elasticsearch.hosts: '${ES_HOSTS:http://localhost:9200}'
+output.elasticsearch.hosts: '${ES_HOSTS}'
 
-setup.dashboards.enabled: '${BEAT_DASHBOARDS:false}'
-setup.kibana.host: '${KIBANA_HOST:http://localhost:5601}'
+setup.dashboards.enabled: '${BEAT_DASHBOARDS}'
+setup.kibana.host: '${KIBANA_HOST}'

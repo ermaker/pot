@@ -2,10 +2,11 @@
 # Docs: https://www.elastic.co/guide/en/beats/metricbeat/6.4/metricbeat-module-kibana.html
 
 - module: kibana
-  #metricsets:
-  #  - status
+  metricsets:
+    - status
   period: 10s
-  hosts: ["localhost:5601"]
+  hosts: '${KIBANA_HOST}'
+  enabled: '${METRIC_KIBANA}'
   #basepath: ""
   #username: "user"
   #password: "secret"
