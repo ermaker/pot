@@ -9,16 +9,17 @@ curl --noproxy localhost -XPUT 'http://localhost:9200/_template/index_setting?pr
   }
 }'
 
-exit
-
-curl --noproxy localhost -XPUT 'http://localhost:9200/_template/logstash?pretty=true' -H 'Content-Type: application/json' -d '{
-  "index_patterns": ["logstash-*"],
+curl --noproxy localhost -XPUT 'http://localhost:9200/_template/fluentd?pretty=true' -H 'Content-Type: application/json' -d '{
+  "index_patterns": ["fluentd-*"],
   "order": 1,
+  "settings": {
+    "codec": "best_compression"
+  },
   "mappings": {
     "doc": {
       "dynamic_templates": [
         {
-          "default_string_to_not_analyzed": {
+          "strings": {
             "match_mapping_type": "string",
             "mapping": {
               "type": "keyword"
