@@ -28,7 +28,8 @@ curl --noproxy localhost -XPUT 'http://localhost:9200/_template/fluentd?pretty=t
         }
       ],
       "properties": {
-        "message": { "type": "text" }
+        "message": { "type": "text" },
+        "docker.number": { "type": "integer" }
       }
     }
   }
