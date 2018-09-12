@@ -4,7 +4,7 @@ curl --noproxy localhost -XPUT 'http://localhost:9200/_template/index_setting?pr
   "index_patterns": ["*"],
   "order": 0,
   "settings": {
-    "number_of_shards" : "5",
+    "number_of_shards" : "1",
     "number_of_replicas" : "0"
   }
 }'
@@ -28,8 +28,7 @@ curl --noproxy localhost -XPUT 'http://localhost:9200/_template/fluentd?pretty=t
         }
       ],
       "properties": {
-        "message": { "type": "text" },
-        "docker.number": { "type": "integer" }
+        "message": { "type": "text" }
       }
     }
   }
