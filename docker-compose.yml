@@ -50,7 +50,7 @@ services:
         limits:
           cpus: '0.40'
           # memory: 16m
-          memory: 80m
+          memory: 256m
     volumes: # TODO
       - ./fluentd/fluent.conf:/fluentd/etc/fluent.conf:ro
       - buffer:/fluentd/log
