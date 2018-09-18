@@ -7,9 +7,7 @@ services:
       - bootstrap.memory_lock=true
       - indices.fielddata.cache.size=20%
       - network.publish_host=${ES_PUBLISH}
-      # - 'ES_JAVA_OPTS=-Xms256m -Xmx256m -Des.scripting.exception_for_missing_value=true'
-      # - 'ES_JAVA_OPTS=-Xms512m -Xmx512m -Des.scripting.exception_for_missing_value=true'
-      - 'ES_JAVA_OPTS=-Xms1g -Xmx1g -Des.scripting.exception_for_missing_value=true'
+      - "ES_JAVA_OPTS=-Xms${ES_HEAP} -Xmx${ES_HEAP} -Des.scripting.exception_for_missing_value=true"
     volumes:
       - elasticsearch:/usr/share/elasticsearch/data
     ulimits:
@@ -22,9 +20,7 @@ services:
     deploy:
       resources:
         limits:
-          # memory: 512m
-          # memory: 1g
-          memory: 3g
+          memory: ${ES_MEM}
   kibana:
     image: docker.elastic.co/kibana/kibana-oss:${VERSION-6.4.0}
     environment:
