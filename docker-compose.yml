@@ -21,6 +21,12 @@ services:
       resources:
         limits:
           memory: ${ES_MEM}
+  es_hq:
+    image: elastichq/elasticsearch-hq
+    environment:
+      - HQ_DEFAULT_URL=http://${ES_PUBLISH}:9200
+    ports:
+      - '9400:5000'
   kibana:
     image: docker.elastic.co/kibana/kibana-oss:${VERSION-6.4.0}
     environment:
