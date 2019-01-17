@@ -50,6 +50,8 @@ services:
     ports:
       - '5160:5160/udp'
       - '5170:5170'
+      - '24224:24224'
+      - '24224:24224/udp'
     restart: always
     deploy:
       resources:
