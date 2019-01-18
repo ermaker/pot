@@ -1,4 +1,4 @@
-version: '3.6'
+version: '2.3'
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:${VERSION-6.4.0}
@@ -17,10 +17,7 @@ services:
       - '9200:9200'
       - 9300
     restart: always
-    deploy:
-      resources:
-        limits:
-          memory: ${ES_MEM}
+    mem_limit: ${ES_MEM}
   es_hq:
     image: elastichq/elasticsearch-hq
     environment:
@@ -36,13 +33,11 @@ services:
     ports:
       - '5601:5601'
     restart: always
-    deploy:
-      resources:
-        limits:
-          memory: 200m
+    mem_limit: 200m
   fluentd:
     image: ermaker/fluentd
     environment:
+      - no_proxy=elasticsearch,${no_proxy}
       - LOGSPOUT=ignore
       - RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR=0.9
     ulimits:
@@ -53,12 +48,8 @@ services:
       - '24224:24224'
       - '24224:24224/udp'
     restart: always
-    deploy:
-      resources:
-        limits:
-          cpus: '0.40'
-          # memory: 16m
-          memory: 256m
+    cpus: 0.4
+    mem_limit: 256m
     volumes: # TODO
       - ./fluentd/fluent.conf:/fluentd/etc/fluent.conf:ro
       - buffer:/fluentd/log
