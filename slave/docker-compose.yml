@@ -1,4 +1,4 @@
-version: '3.6'
+version: '2.3'
 services:
   logspout:
     image: gliderlabs/logspout
@@ -12,12 +12,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     network_mode: host
     restart: always
-    deploy:
-      mode: global
-      resources:
-        limits:
-          cpus: '0.20'
-          memory: 16m
+    mem_limit: 16m
+    cpus: 0.2
   metricbeat:
     image: docker.elastic.co/beats/metricbeat-oss:${VERSION-6.4.0}
     command: -e --system.hostfs=/hostfs --strict.perms=false
@@ -38,9 +34,5 @@ services:
       - ./metricbeat/modules.d:/usr/share/metricbeat/modules.d:ro
     network_mode: host
     restart: always
-    deploy:
-      mode: global
-      resources:
-        limits:
-          cpus: '0.20'
-          memory: 64m
+    mem_limit: 64m
+    cpus: 0.2
