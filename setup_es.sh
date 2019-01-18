@@ -16,7 +16,7 @@ curl --noproxy localhost -XPUT 'http://localhost:9200/_template/fluentd?pretty=t
     "codec": "best_compression"
   },
   "mappings": {
-    "doc": {
+    "_doc": {
       "dynamic_templates": [
         {
           "strings": {
