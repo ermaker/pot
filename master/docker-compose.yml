@@ -47,6 +47,7 @@ services:
       - '5170:5170'
       - '24224:24224'
       - '24224:24224/udp'
+      - '9880:9880'
     restart: always
     cpus: 0.4
     mem_limit: 256m
