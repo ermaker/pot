@@ -6,6 +6,8 @@ processors:
 - add_cloud_metadata:
 
 output.elasticsearch.hosts: '${ES_HOSTS}'
+output.elasticsearch.username: '${ES_USERNAME}'
+output.elasticsearch.password: '${ES_PASSWORD}'
 
 setup.dashboards.enabled: '${BEAT_DASHBOARDS}'
 setup.kibana.host: '${KIBANA_HOST}'

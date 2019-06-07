@@ -15,11 +15,13 @@ services:
     mem_limit: 16m
     cpus: 0.2
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat-oss:${VERSION-6.4.0}
+    image: docker.elastic.co/beats/metricbeat:${VERSION-7.1.1}
     command: -e --system.hostfs=/hostfs --strict.perms=false
     user: root
     environment:
       - ES_HOSTS=${ES_HOSTS-http://localhost:9200}
+      - ES_USERNAME=${ES_USERNAME-elastic}
+      - ES_PASSWORD=${ES_PASSWORD-CHANGEME}
       - BEAT_DASHBOARDS=${BEAT_DASHBOARDS-false}
       - KIBANA_HOST=${KIBANA_HOST-http://localhost:5601}
       - METRIC_KIBANA=${METRIC_KIBANA-false}
