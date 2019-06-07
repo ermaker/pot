@@ -16,30 +16,24 @@ curl --noproxy localhost -XPUT "http://${ES_USERNAME}:${ES_PASSWORD}@localhost:9
   }
 }'
 
-exit
-
-curl --noproxy localhost -XPUT 'http://localhost:9200/_template/fluentd?pretty=true' -H 'Content-Type: application/json' -d '{
+curl --noproxy localhost -XPUT "http://${ES_USERNAME}:${ES_PASSWORD}@localhost:9200/_template/fluentd?pretty=true" -H 'Content-Type: application/json' -d '{
   "index_patterns": ["fluentd-*"],
   "order": 1,
   "settings": {
     "codec": "best_compression"
   },
   "mappings": {
-    "_doc": {
-      "dynamic_templates": [
-        {
-          "strings": {
-            "match_mapping_type": "string",
-            "mapping": {
-              "type": "keyword"
-            }
-          }
-        }
-      ],
-      "properties": {
-        "message": { "type": "text" },
-        "docker.number": { "type": "integer" }
-      }
+    "properties": {
+      "message": { "type": "text" },
+      "docker.number": { "type": "integer" }
     }
+  }
+}'
+
+curl --noproxy localhost -XPUT "http://${ES_USERNAME}:${ES_PASSWORD}@localhost:9200/_template/metricbeat?pretty=true" -H 'Content-Type: application/json' -d '{
+  "index_patterns": ["metricbeat-*"],
+  "order": 1,
+  "settings": {
+    "codec": "best_compression"
   }
 }'
