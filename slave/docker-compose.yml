@@ -1,6 +1,14 @@
 version: '2.3'
+x-default: &default
+  restart: always
+  logging:
+    options:
+      max-size: '10m'
+      max-file: '3'
+
 services:
   logspout:
+    <<: *default
     image: gliderlabs/logspout
     command: ${FLUENTD_HOST-raw://localhost:5160}
     environment:
@@ -11,10 +19,10 @@ services:
       # - /etc/hostname:/etc/host_hostname:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     network_mode: host
-    restart: always
     mem_limit: 16m
     cpus: 0.2
   metricbeat:
+    <<: *default
     image: docker.elastic.co/beats/metricbeat:${VERSION-7.1.1}
     command: -e --system.hostfs=/hostfs --strict.perms=false
     user: root
@@ -35,6 +43,5 @@ services:
       - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
       - ./metricbeat/modules.d:/usr/share/metricbeat/modules.d:ro
     network_mode: host
-    restart: always
     mem_limit: 64m
     cpus: 0.2

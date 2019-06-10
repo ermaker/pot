@@ -1,6 +1,14 @@
 version: '2.3'
+x-default: &default
+  restart: always
+  logging:
+    options:
+      max-size: '10m'
+      max-file: '3'
+
 services:
   elasticsearch:
+    <<: *default
     image: docker.elastic.co/elasticsearch/elasticsearch:${VERSION-7.1.1}
     environment:
       - xpack.security.enabled=true
@@ -20,9 +28,9 @@ services:
     ports:
       - '9200:9200'
       - 9300
-    restart: always
     mem_limit: ${ES_MEM}
   es_hq:
+    <<: *default
     image: elastichq/elasticsearch-hq
     environment:
       - HQ_DEFAULT_URL=http://${ES_USERNAME}:${ES_PASSWORD}@${ES_PUBLISH}:9200
@@ -38,9 +46,9 @@ services:
       parse.flow: json.kibana
     ports:
       - '5601:5601'
-    restart: always
     mem_limit: 200m
   fluentd:
+    <<: *default
     image: ermaker/fluentd
     environment:
       - ES_USERNAME
@@ -56,7 +64,6 @@ services:
       - '24224:24224'
       - '24224:24224/udp'
       - '9880:9880'
-    restart: always
     cpus: 0.4
     mem_limit: 256m
     volumes: # TODO
